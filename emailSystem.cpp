@@ -17,11 +17,11 @@ struct box *de=NULL;
 class mail
 {
 public:
-  string a,pass,name,birth,gen;
+  string a,pass,name,birth,gen;//a->email address,gen->gender
   long mobile;
   mail *next;
   box *inb=NULL;
-  mail *create_node()
+  mail* create_node()
   {
       mail *temp=new mail;
       return temp;
@@ -29,7 +29,7 @@ public:
 
 
 
-int count=0;
+int count=0;//to store account link list e koto number mail
       void signup();
      void login();
      void show();
@@ -38,6 +38,7 @@ int count=0;
 
 };
 mail *head=NULL,*star=NULL,*nam=NULL;
+
 class b
 {
 public:
@@ -48,18 +49,23 @@ public:
 
 void mail::signup()
 {
-int i=0,g;string b;
+    int i=0,g;
+    string b;
+
     mail *temp1,*temp2;int flag,flag1,flag2,flag3,flag4;
+
     temp1=create_node();
     cout<<"\nEnter your name: "<<endl;
     cin>>temp1->name;
+
     x:
     cout<<"\nCreate your Email Address:  "<<endl;
-    cin>>temp1->a;
+    cin>>temp1->a;//here gonna add parsing
+
     for(i=0;i<temp1->a.length();i++)
         b[i]=temp1->a[i];
     int j=0;
-    while(b[j]!='\0')
+    while(b[j]!='\0')//check to see if the email address is valid or not,later add algorithm and cases
     {
         if(b[j]!='@')
             {flag=0;j++;}
@@ -77,31 +83,42 @@ int i=0,g;string b;
       cout<<"\nRenter email id:(@ or .com is missing) ";
       goto x;
     }
+
     cout<<"\nEnter birthdate(dd/mm/yy)"<<endl;
+
     cin>>temp1->birth;
 
-    ge: cout<<"\nEnter Your Gender\n1.Male\n2.Female\n"<<endl;
+    ge: cout<<"\nEnter Your Gender\n1.Male\n2.Female\n(Enter option no.):";
     cin>>g;
+
     switch(g)
     {
     case 1:
-        temp1->gen={"Male"};break;
+        temp1->gen={"Male"};
+        break;
     case 2:
-        temp1->gen={"Female"};break;
+        temp1->gen={"Female"};
+        break;
     default:
-        cout<<"\nPlease Enter correct";goto ge;break;
+        cout<<"\nPlease Enter correct number";
+        goto ge;
+        break;
     }
 
 
     cout<<"\nCreate your Password:  ";
-    cin>>temp1->pass;
+    cin>>temp1->pass;//later add hash or AES encryption
 
     cout<<"\nEnter your Mobile no: "<<endl;
     cin>>temp1->mobile;
+
+    //process of adding to LL
     temp1->next=NULL;
+
     if(head==NULL)
     {
-        head=temp1;count++;
+        head=temp1;
+        count++;
     }
     else
     {
@@ -111,18 +128,19 @@ int i=0,g;string b;
             temp2=temp2->next;
             count++;
         }
-        temp2->next=temp1;count++;
+        temp2->next=temp1;
+        count++;
     }
 
 }
 
-void mail::valid()
+void mail::valid()//to find
 {
-if(head==NULL)
+if(head==NULL)//case for empty LL
 		cout<<"\nNO mail Id Found";
 else
 {
-	int j;
+	int j;//j is a flag
 	string ver;
 	mail *verify;
 	verify=head;
@@ -130,9 +148,10 @@ else
 	cin>>ver;
 	
 		
-		if(verify->next==NULL && verify->a==ver)
-		{			cout<<"\nYour Email Id is verfied and it is Correct"<<endl;
-				j=1;goto b;
+		if(verify->next==NULL && verify->a==ver)//only one email in LL
+		{		cout<<"\nYour Email Id is verfied and it is Correct"<<endl;
+				j=1;
+                goto b;
 		}
 		else
 			j=0;
@@ -141,7 +160,8 @@ else
 			if(verify->a==ver)
 			{
 				cout<<"\nYour Email Id is verfied and it is Correct"<<endl;
-				j=1;goto b;
+				j=1;
+                goto b;
 			}
 			else
 			{
@@ -149,11 +169,13 @@ else
 			}
 			verify=verify->next;
 		}
-			if(verify->a==ver)
+			if(verify->a==ver)//checking the last element
 			{
 				cout<<"\nYour Email Id is verfied and it is Correct"<<endl;
 				j=1;
-			}b:cout<<"";
+			}
+            b:
+            cout<<"";
 		if(j==0)
 		{	
 			cout<<"\nException Found\nYour Email Id is not matching";
@@ -203,12 +225,12 @@ void mail::login()
             			}
             			break;
         		}
-			else
-			{
-				f=0;
-			}
+                else
+                {
+                    f=0;
+                }
 		        start=start->next;
-    		    }
+    		}
 		    if(start->a==eml && start->pass==pa && start->next==NULL)
     			{
 			         cout<<"\nYou Have Successfully Login to Your Account"<<endl;f=1;
@@ -243,8 +265,11 @@ void mail::login()
 		}
 	
 
-  }km:cout<<"";
+  }km:
+    cout<<"";
+
 }
+
 void b::compose()
 {
 	int k;
@@ -253,13 +278,14 @@ void b::compose()
     cout<<"\nEnter Email ID to send Mail";
     cin>>id;
     start=head;
+    
     while(start->next!=NULL)
     {
         if(start->a==id)
         {
             struct box *temp,*t,*p;
             temp=new box;
-            cout<<"\nWrite a Message"<<endl;
+            cout<<"\nWrite a Message:"<<endl;
             cin>>temp->msg;
             temp->from=nam->name;
             temp->nxt=NULL;
