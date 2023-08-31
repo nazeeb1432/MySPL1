@@ -1,7 +1,7 @@
 /*
-Design an E-mail Verifier which accepts the email address from the user.
+An E-mail Verifier which accepts the email address from the user.
 Depending upon the input given by user display appropriate results.
-Use the following concepts in the Project � Constructor, Destructor, new, delete, ex-ceptional handling, string handling functions, etc.
+have used the following concepts in the Project : Constructor,new, delete, ex-ceptional handling, string handling functions, etc.
 */
 #include<iostream>
 #include<cstring>
@@ -56,7 +56,8 @@ void mail::signup()
 
     temp1=create_node();
     cout<<"\nEnter your name: "<<endl;
-    cin>>temp1->name;
+    // cin>>temp1->name;
+    getline(cin,temp1->name);
 
     x:
     cout<<"\nCreate your Email Address:  "<<endl;
@@ -217,17 +218,17 @@ void mail::login()
         			    case 2:
         			        m.inbox();break;
         			    case 3:
-        			        goto km;break;
+        			        goto km;break;//later do m.logout(),can close file
         			    default:
 			                cout<<"\nInvalid Choice ";break;
 
 
-            			}
+            		}
             			break;
         		}
                 else
                 {
-                    f=0;
+                    f=0;//could not find (searched except last mail account)
                 }
 		        start=start->next;
     		}
@@ -236,7 +237,7 @@ void mail::login()
 			         cout<<"\nYou Have Successfully Login to Your Account"<<endl;f=1;
 			         while(1)
          			{
-
+                        d:
 			            cout<<"\nEnter Your Choice\n1.Compose\n2.Inbox\n3.Logout"<<endl;
 			            cin>>c;
 			            nam=start;
@@ -251,7 +252,9 @@ void mail::login()
 				            case 3:
                					 goto km;
 				            default:
-				                cout<<"\nInvalid Choice ";break;
+				                cout<<"\nInvalid Choice,try again";
+                                goto d;
+                                break;
 
 
             				}
@@ -287,11 +290,11 @@ void b::compose()
             temp=new box;
             cout<<"\nWrite a Message:"<<endl;
             cin>>temp->msg;
-            temp->from=nam->name;
+            temp->from=nam->name;//nam is the sender
             temp->nxt=NULL;
-            if(start->inb==NULL)
+            if(start->inb==NULL)//start is here receiver
             {
-                start->inb=temp;
+                start->inb=temp;//sent!!
             }
             else
             {
@@ -302,7 +305,7 @@ void b::compose()
                 }
                 t->nxt=temp;
             }
-            cout<<"\n Your Message Has been send";k=1;
+            cout<<"\n Your Message Has been send";k=1;//k is a flag
 
         }
         else
@@ -329,7 +332,7 @@ void b::compose()
                     p=p->nxt;
                 }
             p->nxt=temp;
-            }cout<<"\nYour Message has been send";
+            }cout<<"\nYour Message has been send";k=1;
     }
 	if(k==0)
 		cout<<"\nAccount Not Found"<<endl;
@@ -343,19 +346,41 @@ void b::inbox()
         cout<<"\nInbox is Empty";
     else
     {
-        p=star->inb;
+        // p=star->inb;
         de=star->inb;
-        while(p->nxt!=NULL)
-        {
-            cout<<"\nYou Have a New Message from :- "<<p->from<<endl;
-            cout<<p->msg<<"\n\n";
-            p=p->nxt;
+
+        int option;
+        op://goto
+        cout<<"\n1.see all messages\n2.see recent message\n"<<endl;
+        cout<<"(enter 1 or 2):";
+        cin>>option;
+
+        if(option!=1 && option!=2) {
+            cout<<"Wrong choice,enter again"<<endl;
+            goto op;
         }
-        cout<<"\nYou Have a New Message from :- "<<p->from<<endl;
-        cout<<p->msg;
+        
+        if(option==1){
+            p=star->inb;
+            while(p->nxt!=NULL)//see all messages,later check if p!=NULL
+            {
+                cout<<"\nYou Have a New Message from :- "<<p->from<<endl;
+                cout<<p->msg<<"\n\n";
+                p=p->nxt;
+            }
+        }
+        if(option==2){
+            p=star->inb;
+            while(p->nxt!=NULL){
+                p=p->nxt;
+            }
+            cout<<"\nYou Have a New Message from :- "<<p->from<<endl;
+            cout<<p->msg;
+        }
+        
     }
 }
-void mail::show()
+void mail::show()//shows all the accounts
 {
    if(head==NULL)
         cout<<"\nNO New Accounts Found";
@@ -364,6 +389,7 @@ void mail::show()
     mail *start;
     start=head;
 	cout<<"\nEmail ID"<<"\t"<<"Name"<<"\t"<<"Mobile No."<<"\t"<<"BirthDate"<<"\t"<<"Gender"<<endl;
+    cout<<"-----------------------------------------------------------------------------------------------\n"<<endl;
     while(start->next!=NULL)
     {
 	
@@ -377,7 +403,7 @@ void mail::show()
 int main()
 {
 	char y;
-    mail m1;
+    mail email;
     box b1;
     int n;
     while(1)
@@ -388,22 +414,26 @@ int main()
         {
 
             case 1:
-                m1.signup();
+                email.signup();
                 break;
             case 2:
-                m1.login();break;
+                email.login();
+                break;
             case 3:
-                m1.show();break;
-	    case 4:
-		m1.valid();break;
-		case 5:
-			exit(0);
-        default:
-            cout<<"\nWrong Choice";
+                email.show();
+                break;
+            case 4:
+                email.valid();
+                break;
+            case 5:
+                exit(0);//terminate programme
+            default:
+                cout<<"\nWrong Choice";
+                break;
 
         }qq:cout<<"\nPress Y to continue";
 	cin>>y;
-	if(y=='y'||y=='Y')
+	if(y=='y'|| y=='Y')
 		continue;
 	else
 		goto qq;
