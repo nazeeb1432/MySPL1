@@ -55,9 +55,11 @@ void mail::signup()
     mail *temp1,*temp2;int flag,flag1,flag2,flag3,flag4;
 
     temp1=create_node();
-    cout<<"\nEnter your name: "<<endl;
+    cout<<"\nEnter your name: ";
     // cin>>temp1->name;
+    cin.ignore();
     getline(cin,temp1->name);
+    
 
     x:
     cout<<"\nCreate your Email Address:  "<<endl;
@@ -81,7 +83,7 @@ void mail::signup()
 
     if(flag==0)
     {
-      cout<<"\nRenter email id:(@ or .com is missing) ";
+      cout<<"\nRe-Enter email id:(@ or .com is missing) ";
       goto x;
     }
 
@@ -108,10 +110,10 @@ void mail::signup()
 
 
     cout<<"\nCreate your Password:  ";
-    cin>>temp1->pass;//later add hash or AES encryption
+    cin>>temp1->pass;//later add hash or AES encryption and strongness checker
 
     cout<<"\nEnter your Mobile no: "<<endl;
-    cin>>temp1->mobile;
+    cin>>temp1->mobile;//later add condition of 11 digits
 
     //process of adding to LL
     temp1->next=NULL;
@@ -278,8 +280,9 @@ void b::compose()
 	int k;
     mail *start;
     string id;
-    cout<<"\nEnter Email ID to send Mail";
+    cout<<"\nEnter Email ID to send Mail: ";
     cin>>id;
+    cin.ignore();
     start=head;
     
     while(start->next!=NULL)
@@ -288,8 +291,12 @@ void b::compose()
         {
             struct box *temp,*t,*p;
             temp=new box;
-            cout<<"\nWrite a Message:"<<endl;
-            cin>>temp->msg;
+            cout<<"\nWrite a Message: ";
+            cin.ignore();
+            // cin>>temp->msg;
+
+            getline(cin, temp->msg);
+
             temp->from=nam->name;//nam is the sender
             temp->nxt=NULL;
             if(start->inb==NULL)//start is here receiver
@@ -318,8 +325,11 @@ void b::compose()
     {
         struct box *temp,*t,*p=NULL;
             temp=new box;
-            cout<<"\nWrite a Message"<<endl;
-            cin>>temp->msg;
+            cout<<"\nWrite a Message:";//condition add later that if double enter then only can send message
+            cin.ignore();
+            // cin>>temp->msg;
+            getline(cin, temp->msg);
+
             temp->from=nam->name;
             temp->nxt=NULL;
             if(start->inb==NULL)
@@ -431,10 +441,11 @@ int main()
                 cout<<"\nWrong Choice";
                 break;
 
-        }qq:cout<<"\nPress Y to continue";
+        }qq:cout<<"\nPress Y to continue: ";
 	cin>>y;
-	if(y=='y'|| y=='Y')
-		continue;
+	if(y=='y'|| y=='Y'){
+        continue;
+    }		
 	else
 		goto qq;
         

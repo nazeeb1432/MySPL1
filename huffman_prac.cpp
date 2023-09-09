@@ -24,7 +24,7 @@ int main(){
     char data[6]={'a', 'b', 'c', 'd', 'e'};
     int freq[]={5,9,12,13,16};
 
-    int n=sizeof(data)/sizeof(data[0]);
+    int n=sizeof(data)/sizeof(data[0]);//n->unique characters array size
 
     huffman_encode(data,freq,n);
 

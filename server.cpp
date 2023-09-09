@@ -17,7 +17,7 @@ int main(int argc,char *argv[]){
         fprintf(stderr,"Port NO not provided.Program terminated\n");
         exit(1);
     }
-    int sockfd,newsockfd,portno;
+    int sockfd,newsockfd,portno,n;
     char buffer[255];
     
     struct sockaddr_in serv_addr,cli_addr;
@@ -42,6 +42,34 @@ int main(int argc,char *argv[]){
     }
 
     listen(sockfd,5);//5 connections
+    clilen=sizeof(cli_addr);
+
+    newsockfd=accept(sockfd,(struct sockaddr *) &cli_addr, &clilen);
+
+    if(newsockfd<0){
+        error("Error on accept");
+    }
+  
+    while(1){
+        bzero(buffer,255);
+        n=read(newsockfd,buffer,255);
+        if(n<0){
+            error("Error on reading.");
+        }
+        printf("Client : %s\n",buffer);
+        fgets(buffer,255,stdin);
+
+        n=write(newsockfd,buffer, strlen(buffer));
+        if(n<0){
+            error("Error on writing.");
+        }
+
+        int i=strncmp("Bye",buffer,3);
+        if(i==0)
+            break;
+
+
+    }
 
 
 
