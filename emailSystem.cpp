@@ -6,6 +6,7 @@ have used the following concepts in the Project : Constructor,new, delete, ex-ce
 #include<iostream>
 #include<cstring>
 #include<stdlib.h>
+#include "huffman_prac.cpp"
 using namespace std;
 
 struct box
