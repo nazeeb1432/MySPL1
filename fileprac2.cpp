@@ -14,6 +14,7 @@ int main(){
 
     ifstream hin("sample.txt");
     string content;
+    
     getline(hin,content);
     cout<<"Content of the file is:"<<content<<endl;
     
