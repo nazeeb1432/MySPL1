@@ -56,8 +56,9 @@ int main(int argc, char *argv[])
     }
 
     FILE *fp;
+    
     int ch=0;
-    fp=fopen("glad_received.txt","a");
+    fp=fopen("glad_received.txt","w");
     int words;
 
     read(newsockfd, &words,sizeof(int));
