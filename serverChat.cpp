@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     portno = atoi(argv[1]);
 
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = INADDR_ANY;
+    serv_addr.sin_addr.s_addr = INADDR_ANY;//or specify another Ip address for another machine,this contains local host IP address
     serv_addr.sin_port = htons(portno);
 
     if (bind(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
         error("Binding failed.");
     }
 
-    listen(sockfd, 5); // 5 connections
+    listen(sockfd, 5); // 5 connections->5 is backlog
     clilen = sizeof(cli_addr);
 
     newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, &clilen);
@@ -55,10 +55,12 @@ int main(int argc, char *argv[])
         error("Error on accept");
     }
 
+
+    //chat applicaation
     while (1)
     {
         bzero(buffer, 255);
-        n = read(newsockfd, buffer, 255);
+        n = read(newsockfd, buffer, 255);//newsockfd reads from buffer
         if (n < 0)
         {
             error("Error on reading.");
@@ -72,8 +74,11 @@ int main(int argc, char *argv[])
             error("Error on writing.");
         }
 
-        int i = strncmp("Bye", buffer, 3);
+        int i = strncmp("bye", buffer, 3);
         if (i == 0)
             break;
     }
+    close(newsockfd);
+    close(sockfd);
+    return 0;
 }

@@ -7,7 +7,6 @@ argv[2] portno
 
 */
 
-
 #include<bits/stdc++.h>
 #include<sys/types.h>
 #include<sys/socket.h>
@@ -40,7 +39,8 @@ int main(int argc,char *argv[]){
         error("ERROR opening socket");
     }
 
-    server=gethostbyname(argv[1]);
+    server=gethostbyname(argv[1]);//gets the server ip address
+
     if(server==NULL){
         fprintf(stderr,"Error,no such host");
     }
@@ -53,28 +53,34 @@ int main(int argc,char *argv[]){
     if(connect(sockfd, (struct sockaddr *) &serv_addr , sizeof(serv_addr))<0)
             error("Connection Failed");
     
+    bzero(buffer,255);
 
-    while(1)
-    {
-        bzero(buffer, 255);
-        fgets(buffer, 255, stdin);
-        n=write(sockfd, buffer,strlen(buffer));
-        if(n<0){
-            error("Error on writing");
-        }
-        bzero(buffer,255);
-        n=read(sockfd,buffer,255);
-        if(n<0)
-            error("Error on reading.");
+    FILE *f;
+    int words=0;
 
-        printf("Server: %s ",buffer);
+    char c;
 
-        int i=strncmp("Bye ",buffer, 3);
-        if(i==0) break;
-           
+    f=fopen("glad.txt", "r");
+
+    while((c=getc(f))!=EOF){
+        fscanf(f,"%s",buffer);
+        if(isspace(c) || c=='\t') words++;
     }
 
+    write(sockfd,&words,sizeof(int));//server will read this
+    rewind(f);
+
+    char ch;
+    while(ch!=EOF){
+        fscanf(f,"%s",buffer);
+        write(sockfd,buffer,255);
+        ch=fgetc(f);
+    }
+    printf("The file has been successfully sent.Thank you\n");
+
     close(sockfd);
+
+
     return 0;
 
 }
