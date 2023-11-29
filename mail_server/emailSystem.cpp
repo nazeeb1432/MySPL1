@@ -313,7 +313,7 @@ void b::compose()
                 }
                 t->nxt=temp;
             }
-            cout<<"\n Your Message Has been send";k=1;//k is a flag
+            cout<<"\n Your Message Has been send";k=1;//k is a flag,need to do proper naming
 
         }
         else
