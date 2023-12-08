@@ -6,7 +6,9 @@ have used the following concepts in the Project : Constructor,new, delete, ex-ce
 #include<iostream>
 #include<cstring>
 #include<stdlib.h>
-#include "huffman_prac.cpp"
+// #include "huffman_prac.cpp"
+#include<regex>
+
 using namespace std;
 
 struct box
@@ -63,23 +65,34 @@ void mail::signup()
     
 
     x:
-    cout<<"\nCreate your Email Address:  "<<endl;
+    cout<<"\nCreate your Email Address (bsse+4digits+@+nazeeb.com): "<<endl;
     cin>>temp1->a;//here gonna add parsing
 
-    for(i=0;i<temp1->a.length();i++)
-        b[i]=temp1->a[i];
-    int j=0;
-    while(b[j]!='\0')//check to see if the email address is valid or not,later add algorithm and cases
-    {
-        if(b[j]!='@')
-            {flag=0;j++;}
-        else
-            {
-                flag=1;
-                break;
-            }
+    // for(i=0;i<temp1->a.length();i++)
+    //     b[i]=temp1->a[i];
+    // int j=0;
 
+    regex pattern("bsse\\d{4}@nazeeb\\.com");
+
+    if (regex_match(temp1->a, pattern)) {
+        flag=1;
+        std::cout << "Email account created successfully!!\n" << std::endl;
+    } else {
+        flag=0;
+        // std::cout << "Invalid email format." << std::endl;
     }
+
+    // while(b[j]!='\0')//check to see if the email address is valid or not,later add algorithm and cases
+    // {
+    //     if(b[j]!='@')
+    //         {flag=0;j++;}
+    //     else
+    //         {
+    //             flag=1;
+    //             break;
+    //         }
+
+    // }
 
 
     if(flag==0)
