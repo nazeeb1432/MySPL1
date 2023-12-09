@@ -8,6 +8,8 @@ have used the following concepts in the Project : Constructor,new, delete, ex-ce
 #include<stdlib.h>
 // #include "huffman_prac.cpp"
 #include<regex>
+#include "SHA-Algo/sha.h"
+// #include "SHA-Algo/sha256().h"
 
 using namespace std;
 
@@ -20,7 +22,8 @@ struct box *de=NULL;
 class mail
 {
 public:
-  string a,pass,name,birth,gen;//a->email address,gen->gender
+  string a,pass,name,birth,gen;//a->email address
+  string hashedPassword;
   long mobile;
   mail *next;
   box *inb=NULL;
@@ -42,12 +45,13 @@ int count=0;//to store account link list e koto number mail
 };
 mail *head=NULL,*star=NULL,*nam=NULL;
 
-class b
+class b//mail operations
 {
 public:
     void compose();
     void inbox();
     void deletemsg();
+    void sendFile();
 };
 
 void mail::signup()
@@ -67,6 +71,7 @@ void mail::signup()
     x:
     cout<<"\nCreate your Email Address (bsse+4digits+@+nazeeb.com): "<<endl;
     cin>>temp1->a;//here gonna add parsing
+    printf("\n");
 
     // for(i=0;i<temp1->a.length();i++)
     //     b[i]=temp1->a[i];
@@ -97,7 +102,7 @@ void mail::signup()
 
     if(flag==0)
     {
-      cout<<"\nRe-Enter email id:(@ or .com is missing) ";
+      cout<<"\nRe-Enter email id:(in the required format) ";
       goto x;
     }
 
@@ -124,7 +129,8 @@ void mail::signup()
 
 
     cout<<"\nCreate your Password:  ";
-    cin>>temp1->pass;//later add hash or AES encryption and strongness checker
+    cin>>temp1->pass;
+    temp1->hashedPassword=Hash(temp1->pass);//Hashing the password
 
     cout<<"\nEnter your Mobile no: "<<endl;
     cin>>temp1->mobile;//later add condition of 11 digits
@@ -205,14 +211,18 @@ void mail::login()
 {
    	 if(head==NULL)
         	cout<<"\nNo Accounts are Created";
-    	else
+    else
 	{
     		b m;
 		    mail* start;
+
 	    int f,c;
 	    string eml,pa;
+
 	   nn: cout<<"\nEnter Your Email ID"<<endl;
+
 	    cin>>eml;
+
 	    cout<<"\nEnter Password"<<endl;
     		cin>>pa;
 	    start=head;
@@ -220,9 +230,10 @@ void mail::login()
 		{
 		    while(start->next!=NULL)
 		    {
-        		if(start->a==eml && start->pass==pa)
+        		if(start->a==eml && start->hashedPassword==Hash(pa))
         		{
-        		    cout<<"\nYou Have Successfully Login to Your Account"<<endl;f=1;
+        		    cout<<"\nYou Have Successfully Login to Your Account"<<endl;
+                    f=1;
         		    nam=start;
         		    cout<<"\nEnter Your Choice\n1.Compose\n2.Inbox\n3.Logout"<<endl;
         		    cin>>c;
@@ -248,7 +259,7 @@ void mail::login()
                 }
 		        start=start->next;
     		}
-		    if(start->a==eml && start->pass==pa && start->next==NULL)
+		    if(start->a==eml && start->hashedPassword==Hash(pa) && start->next==NULL)
     			{
 			         cout<<"\nYou Have Successfully Login to Your Account"<<endl;f=1;
 			         while(1)
