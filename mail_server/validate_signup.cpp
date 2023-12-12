@@ -3,12 +3,14 @@ using namespace std;
 #include<regex>
 #include "SHA-Algo/sha.h"
 
-vector<pair<string,bool>> viki;
-vector<pair<pair<string,string>,string>> vec;
+
 
 
 
 bool checkID_and_signup(string str){
+
+    vector<pair<string,bool>> viki;
+    vector<pair<pair<string,string>,string>> vec;
 
     ifstream input;
     input.open("uniqueMailID.txt");

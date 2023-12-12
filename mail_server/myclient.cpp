@@ -25,16 +25,18 @@ using namespace std;
 pair<string,string> pairloggedInUser;//logined user's corresponding firstname;
 pair<pair<string,string>,string> pairloggedInUserRecord;
 
-vector<pair<pair<string,string>,string>> vectUserRecord;//({{username,firstname},hasvalue})
+
 
 
 
 bool checkIfReceiverIsRegisteredOrNot(string str){
+
+      vector<pair<pair<string,string>,string>> vectUserRecord;//({{username,firstname},hasvalue})
       ifstream in;
       in.open("Accounts.txt");
-      if(in.fail()){
-         return false;
-      }
+      // if(in.fail()){
+      //    return false;
+      // }
 
       string user,userFirstName,hashedvalue;
       while(in>>user>>userFirstName>>hashedvalue){
@@ -44,8 +46,8 @@ bool checkIfReceiverIsRegisteredOrNot(string str){
       in.close();
 
       for(auto &x:vectUserRecord){
-         if(str==x.first.first){
-            vectUserRecord.clear();
+         if(str==x.first.first){//found the id!!
+            // vectUserRecord.clear();
             return true;
          }
       }
@@ -66,11 +68,13 @@ bool checkIfUserIsInLoggedInPairOrNot(string str){
 
 
 bool checkIfUsernameExistsInServerOrNot(string str){
+
+      vector<pair<pair<string,string>,string>> vectUserRecord;//({{username,firstname},hasvalue})
       ifstream in;
       in.open("Accounts.txt");
-      if(in.fail()){
-         return false;
-      }
+      // if(in.fail()){
+      //    return false;
+      // }
 
       string user,userFirstName,hashedvalue;
       while(in>>user>>userFirstName>>hashedvalue){
@@ -83,7 +87,7 @@ bool checkIfUsernameExistsInServerOrNot(string str){
          if(str==x.first.first){
             pairloggedInUser={x.first.first,x.first.second};
             pairloggedInUserRecord={{x.first.first,x.first.second},x.second};
-            vectUserRecord.clear();//jehetu global
+            // vectUserRecord.clear();//jehetu global
             return true;
          }
       }
@@ -97,24 +101,25 @@ bool checkIfUsernameExistsInServerOrNot(string str){
 bool login_helper(){
    string usernameInput, passwordInput;
    bool bolean=0;
-   cout<<"Enter username:"<<endl;
+   
+   cout<<"\nEnter username:";
    cin>>usernameInput;
    bolean=checkIfUsernameExistsInServerOrNot(usernameInput);
 
    if(bolean){        
-      cout<<"Enter password:"<<endl;
+      cout<<"\nEnter password:";
       cin>>passwordInput;
       if(Hash(passwordInput)==pairloggedInUserRecord.second){
-         cout<<"login successful!"<<endl;
+         cout<<"\nlogin successful!";
          return true;
       }
       else{
-         cout<<"Improper password,logIn failed"<<endl;//later add do-while loop
+         cout<<"\nImproper password,logIn failed";//later add do-while loop
          return false;
       }
    }
    else{
-      cout<<"Username does not exist"<<endl;
+      cout<<"\nUsername does not exist";
       return false;
    }
 
@@ -163,7 +168,7 @@ int main(int argc, char *argv[])
                
                g3:
 
-               cout<<"Give any of the commands- SEND,LIST,READ,DEL or QUIT(logout):\n";
+               cout<<"\nGive any of the commands- SEND,LIST,READ,DEL or QUIT(logout):";
                //after successful login,show list of operations
                fgets(command, BUF, stdin);
                buffer[strlen(command)] = '\0';
@@ -192,7 +197,7 @@ int main(int argc, char *argv[])
 
                   senderFlag=checkIfUserIsInLoggedInPairOrNot(sender);
                   if(!senderFlag){
-                     cout<<"\nusername not same as logged in username,try again"<<endl;
+                     cout<<"\nusername not same as logged in username,try again";
                      goto S;
                   }
                   clientSocket.sendMessage(buffer);
@@ -206,7 +211,7 @@ int main(int argc, char *argv[])
                   receiver=receiver.substr(0,receiver.length()-1);
                   receiverFlag=checkIfReceiverIsRegisteredOrNot(receiver);
                   if(!receiverFlag){
-                     cout<<"\nreceiver is not registered in server,try giving another one"<<endl;
+                     cout<<"\nreceiver is not registered in server,try giving another one";
                      goto R;
                   }
                   clientSocket.sendMessage(buffer);
@@ -218,7 +223,7 @@ int main(int argc, char *argv[])
                   clientSocket.sendMessage(buffer);
 
                   //message:
-                  cout<<"message(type .\n to terminate):";
+                  cout<<"message(type dot+enter to terminate):";
                   fgets(buffer, BUF, stdin);
                   buffer[strlen(buffer)] = '\0';
                   clientSocket.sendMessage(buffer);
@@ -244,9 +249,9 @@ int main(int argc, char *argv[])
                   buffer[strlen(buffer)] = '\0';
                   string userid=buffer;
                   userid=userid.substr(0,userid.length()-1);
-                  bool b=checkIfReceiverIsRegisteredOrNot(userid);
-                  if(!b){
-                      cout<<"\nUser is not registered in server,try giving another one"<<endl;
+                  bool bt=checkIfReceiverIsRegisteredOrNot(userid);
+                  if(!bt){
+                      cout<<"\nUser is not registered in server,try giving another one";
                       goto L;
                   }
                   clientSocket.sendMessage(buffer);
@@ -272,19 +277,19 @@ int main(int argc, char *argv[])
                else if (strcmp(command, "READ\n\0") == 0)
                {  
 
-                  RD:
+                  // RD:
                   // user
                   cout<<"Enter your own loggedIn userID to read your mails:";
                   fgets(buffer, BUF, stdin);
                   buffer[strlen(buffer)] = '\0';
-                  string ownID=buffer;
-                  ownID=ownID.substr(0,ownID.length()-1);
-                  bool ownFlag=checkIfUserIsInLoggedInPairOrNot(ownID);
+                  // string ownID=buffer;
+                  // ownID=ownID.substr(0,ownID.length()-1);
+                  // bool ownFlag=checkIfUserIsInLoggedInPairOrNot(ownID);
 
-                  if(!ownFlag){
-                     cout<<"\nWrong username,enter yours!!"<<endl;
-                     goto RD;
-                  }
+                  // if(!ownFlag){
+                  //    cout<<"\nWrong username,enter yours!!";
+                  //    goto RD;
+                  // }
 
                   clientSocket.sendMessage(buffer);
 
@@ -326,7 +331,7 @@ int main(int argc, char *argv[])
                   myID=myID.substr(0,myID.length()-1);
                   bool myFlag=checkIfUserIsInLoggedInPairOrNot(myID);
                   if(!myFlag){
-                     cout<<"\nplease enter your loggedIn id!!"<<endl;
+                     cout<<"\nplease enter your loggedIn id!!";
                      goto D;
                   }
                   clientSocket.sendMessage(buffer);
@@ -347,7 +352,7 @@ int main(int argc, char *argv[])
 
                else
                {
-                  cout << "Unknown command!" << endl;
+                  cout << "\nUnknown command!";
                }
             }
       }
