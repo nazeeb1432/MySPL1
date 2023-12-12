@@ -1,7 +1,8 @@
 /* myserver.cpp 
-BIF3C1 Josef Koch if18b061
-Protokollaufbau von SEND, LIST, READ, DEL, QUIT -> implementiert wie in der Angabe
-Es fehlen: LOGIN, LDAP Anbindung, Sperren von Clients bei fehlerhaften Login
+
+Protocol structure for SEND, LIST, READ, DEL, QUIT -> implemented as specified
+Missing:  LDAP integration, Huffman"
+
 */
 
 #include <sys/types.h>

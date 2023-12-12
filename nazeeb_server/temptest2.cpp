@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
+#include<conio.h>
 
 pair<string,string> pr;
 pair<int,int>p1={10,12};
@@ -53,6 +54,26 @@ int main(){
     // func();
     // cout<<"After,pr is:";
     // cout<<pr.first<<" "<<pr.second<<endl;
+
+    string username,password;
+    int ch;
+    
+    string realpassword="nazeeb";
+
+    cout<<"username: ";
+    cin>>username;
+    cout<<"password: ";
+    c:
+    ch=getch();
+
+    while(ch!='\n'){
+        password.push_back(ch);
+        cout<<'*';
+        ch=getch();
+    }
+
+    if (realpassword!=password) goto c;
+    else cout<<"\nLog in successfully."<<endl;
 
    
 
