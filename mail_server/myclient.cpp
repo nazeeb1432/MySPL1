@@ -1,7 +1,7 @@
 /* myclient.cpp 
 
 Protocol structure for SEND, LIST, READ, DEL, QUIT -> implemented as specified
-Missing:  LDAP integration, Locking clients on incorrect login"
+Missing:  LDAP integration, Huffman"
 
 */
 
@@ -163,7 +163,7 @@ int main(int argc, char *argv[])
                
                g3:
 
-               cout<<"Give the commands SEND,LIST,READ or DEL for operations:\n";
+               cout<<"Give any of the commands- SEND,LIST,READ,DEL or QUIT(logout):\n";
                //after successful login,show list of operations
                fgets(command, BUF, stdin);
                buffer[strlen(command)] = '\0';
@@ -236,10 +236,19 @@ int main(int argc, char *argv[])
                }
 
                else if (strcmp(command, "LIST\n\0") == 0)
-               {
+               {  
+                  L:
                   // user
+                  cout<<"Enter username to see message list:";
                   fgets(buffer, BUF, stdin);
                   buffer[strlen(buffer)] = '\0';
+                  string userid=buffer;
+                  userid=userid.substr(0,userid.length()-1);
+                  bool b=checkIfReceiverIsRegisteredOrNot(userid);
+                  if(!b){
+                      cout<<"\nUser is not registered in server,try giving another one"<<endl;
+                      goto L;
+                  }
                   clientSocket.sendMessage(buffer);
 
                   string mailSubject, numberOfMails;
@@ -261,13 +270,26 @@ int main(int argc, char *argv[])
                }
 
                else if (strcmp(command, "READ\n\0") == 0)
-               {
+               {  
+
+                  RD:
                   // user
+                  cout<<"Enter your own loggedIn userID to read your mails:";
                   fgets(buffer, BUF, stdin);
                   buffer[strlen(buffer)] = '\0';
+                  string ownID=buffer;
+                  ownID=ownID.substr(0,ownID.length()-1);
+                  bool ownFlag=checkIfUserIsInLoggedInPairOrNot(ownID);
+
+                  if(!ownFlag){
+                     cout<<"\nWrong username,enter yours!!"<<endl;
+                     goto RD;
+                  }
+
                   clientSocket.sendMessage(buffer);
 
                   // mail number
+                  cout<<"Enter mail number you want to read:";
                   fgets(buffer, BUF, stdin);
                   buffer[strlen(buffer)] = '\0';
                   clientSocket.sendMessage(buffer);
@@ -293,13 +315,24 @@ int main(int argc, char *argv[])
                }
 
                else if (strcmp(command, "DEL\n\0") == 0)
-               {
+               {  
+                  D:
                   // user
+                   cout<<"Enter your own loggedIn userID to delete mails:";
                   fgets(buffer, BUF, stdin);
                   buffer[strlen(buffer)] = '\0';
+
+                  string myID=buffer;
+                  myID=myID.substr(0,myID.length()-1);
+                  bool myFlag=checkIfUserIsInLoggedInPairOrNot(myID);
+                  if(!myFlag){
+                     cout<<"\nplease enter your loggedIn id!!"<<endl;
+                     goto D;
+                  }
                   clientSocket.sendMessage(buffer);
 
                   // mail number
+                  cout<<"Enter mail number you wan to delete:";
                   fgets(buffer, BUF, stdin);
                   buffer[strlen(buffer)] = '\0';
                   clientSocket.sendMessage(buffer);

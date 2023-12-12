@@ -53,7 +53,7 @@ void serverThread(MyHelper helper, MySocket &serverSocket, int new_socket, strin
          }
 
          // check for length violations, +1 because of \n
-         if (sender.length() > 9 || receiver.length() > 9 || subject.length() > 81)
+         if (sender.length() > 23 || receiver.length() > 23 || subject.length() > 81)
          {
             serverSocket.sendMessage("ERR - sender or reveiver or subject length is too long\0", new_socket);
          }
