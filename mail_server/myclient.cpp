@@ -166,7 +166,7 @@ int main(int argc, char *argv[])
             while (1)
             {
                
-               g3:
+               // g3:
 
                cout<<"\nGive any of the commands- SEND,LIST,READ,DEL or QUIT(logout):";
                //after successful login,show list of operations
@@ -277,19 +277,19 @@ int main(int argc, char *argv[])
                else if (strcmp(command, "READ\n\0") == 0)
                {  
 
-                  // RD:
+                   RD:
                   // user
                   cout<<"Enter your own loggedIn userID to read your mails:";
                   fgets(buffer, BUF, stdin);
                   buffer[strlen(buffer)] = '\0';
-                  // string ownID=buffer;
-                  // ownID=ownID.substr(0,ownID.length()-1);
-                  // bool ownFlag=checkIfUserIsInLoggedInPairOrNot(ownID);
+                  string ownID=buffer;
+                  ownID=ownID.substr(0,ownID.length()-1);
+                  bool ownFlag=checkIfUserIsInLoggedInPairOrNot(ownID);
 
-                  // if(!ownFlag){
-                  //    cout<<"\nWrong username,enter yours!!";
-                  //    goto RD;
-                  // }
+                  if(!ownFlag){
+                     cout<<"\nWrong username,enter yours!!";
+                     goto RD;
+                  }
 
                   clientSocket.sendMessage(buffer);
 
