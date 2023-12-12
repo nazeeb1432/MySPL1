@@ -17,6 +17,7 @@ Es fehlen: LOGIN, LDAP Anbindung, Sperren von Clients bei fehlerhaften Login
 #include <pthread.h>
 #include <iostream>
 #include <vector>
+#include<algorithm>
 #include <fstream>
 #include <thread>
 #include <mutex>
@@ -161,12 +162,14 @@ void serverThread(MyHelper helper, MySocket &serverSocket, int new_socket, strin
             // check if user exists
             if (access(dirPath.c_str(), F_OK) == -1)
             {
-               serverSocket.sendMessage("ERR - user does not exist\0", new_socket);
+               serverSocket.sendMessage("ERR - user INBOX does not exist\0", new_socket);
             }
             else
             {
                // get every file from directory
                mails = helper.filenamesInDirecotry(dirPath);//mail number er basis e sort lagao
+
+               sort(mails.begin(),mails.end());
 
                // check if requested mail actually exists
                if (mailIndex < mails.size())
@@ -232,6 +235,8 @@ void serverThread(MyHelper helper, MySocket &serverSocket, int new_socket, strin
             {
                // get every file from directory
                mails = helper.filenamesInDirecotry(dirPath);
+
+               sort(mails.begin(),mails.end());
 
                // check if requested mail actually exists
                if (mailIndex < mails.size())

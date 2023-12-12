@@ -1,12 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-pair<int,int> pr;
+pair<string,string> pr;
 pair<int,int>p1={10,12};
 
-void func(){
-    pr={p1.first,p1.second};
-}
+
 
 int main(){
     //     int a=1;
@@ -49,12 +47,14 @@ int main(){
     // cout<<str<<endl;
     // cout<<str.length()<<endl;
 
-    pr={3,5};
-    cout<<"Before,pr is:";
-    cout<<pr.first<<" "<<pr.second<<endl;
-    func();
-    cout<<"After,pr is:";
-    cout<<pr.first<<" "<<pr.second<<endl;
+    pr={"bangladesh","dhaka"};
+    // cout<<"Before,pr is:";
+    // cout<<pr.first<<" "<<pr.second<<endl;
+    // func();
+    // cout<<"After,pr is:";
+    // cout<<pr.first<<" "<<pr.second<<endl;
+
+   
 
 
     

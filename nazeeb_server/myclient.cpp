@@ -111,6 +111,8 @@ bool login_helper(){
       cin>>passwordInput;
       if(Hash(passwordInput)==pairloggedInUserRecord.second){
          cout<<"\nlogin successful!";
+         // char c;
+         // cin>>c;
          return true;
       }
       else{
@@ -156,6 +158,7 @@ int main(int argc, char *argv[])
       if(choice==1){
          signUpHelper();
       }
+      if(choice <1 || choice >3) goto g2;
       if(choice==2)
       {
          //after login operations
@@ -167,7 +170,7 @@ int main(int argc, char *argv[])
             {
                
                // g3:
-
+               cin.ignore();
                cout<<"\nGive any of the commands- SEND,LIST,READ,DEL or QUIT(logout):";
                //after successful login,show list of operations
                fgets(command, BUF, stdin);
@@ -189,7 +192,7 @@ int main(int argc, char *argv[])
                   //sender
 
                   S:
-                  cout<<"Sender mailID:";
+                  cout<<"\nSender mailID:";
                   fgets(buffer, BUF, stdin);//sender email address
                   buffer[strlen(buffer)] = '\0';
                   sender=buffer;
@@ -204,7 +207,7 @@ int main(int argc, char *argv[])
 
                   //receiver
                   R:
-                  cout<<"receiver mailID:";
+                  cout<<"\nreceiver mailID:";
                   fgets(buffer, BUF, stdin);//sender email address
                   buffer[strlen(buffer)] = '\0';
                   receiver=buffer;
@@ -323,7 +326,7 @@ int main(int argc, char *argv[])
                {  
                   D:
                   // user
-                   cout<<"Enter your own loggedIn userID to delete mails:";
+                   cout<<"\nEnter your own loggedIn userID to delete mails:";
                   fgets(buffer, BUF, stdin);
                   buffer[strlen(buffer)] = '\0';
 
