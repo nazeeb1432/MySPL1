@@ -1,5 +1,6 @@
 /* myclient.cpp 
 
+IMAP
 Protocol structure for SEND, LIST, READ, DEL, QUIT -> implemented as specified
 Missing:  LDAP integration, Huffman"
 
@@ -17,6 +18,8 @@ Missing:  LDAP integration, Huffman"
 #include "myhelper/myhelper.cpp"
 #include "mysocket/mysocket.cpp"
 #include "validate_signup.cpp"
+
+#include<conio.h>
 
 #define BUF 1024
 
@@ -101,6 +104,8 @@ bool checkIfUsernameExistsInServerOrNot(string str){
 bool login_helper(){
    string usernameInput, passwordInput;
    bool bolean=0;
+
+   char ch;
    
    cout<<"\nEnter username:";
    cin>>usernameInput;
@@ -108,7 +113,26 @@ bool login_helper(){
 
    if(bolean){        
       cout<<"\nEnter password:";
-      cin>>passwordInput;
+      //making changes
+      // cin>>passwordInput;
+                ch=getch();//discards \n of username
+                ch=getch();//for first character of password
+                while(ch!='\n'){
+                    if(ch==127){//127 is backspace
+                        if(passwordInput.size()!=0){
+                            passwordInput.pop_back();
+                        }
+                    }
+                    else{
+                        passwordInput.push_back(ch);
+                        cout<<'*';
+                    }
+                    // cout<<password<<endl;
+                    ch=getch();
+                }
+
+
+      //change finished
       if(Hash(passwordInput)==pairloggedInUserRecord.second){
          cout<<"\nlogin successful!";
          // char c;
@@ -151,7 +175,7 @@ int main(int argc, char *argv[])
       cout<<"2.Login"<<endl;
       cout<<"3.Exit"<<endl;
       cout<<"---------------------------------------------------------------\n";
-      cout<<"Enter your choice:";
+      cout<<"Enter your choice(OPTION NO.):";
       cin>>choice;
       cout<<"---------------------------------------------------------------\n";
       if(choice==3) break;
@@ -271,7 +295,8 @@ int main(int argc, char *argv[])
                         // tell the server to start sending the list of mails
                         clientSocket.sendMessage("OK\0");
                         mailSubject = clientSocket.recvMessage();
-                        mailSubject = mailSubject.substr(mailSubject.find('_') + 1, mailSubject.length()) + ' ' + to_string(i);
+                        // mailSubject = mailSubject.substr(mailSubject.find('_') + 1, mailSubject.length()) + ' ' + to_string(i);
+                         mailSubject = mailSubject.substr(mailSubject.find('_') + 1, mailSubject.length()) + ' ' + mailSubject.substr(0,mailSubject.find('_'));
                         cout << mailSubject << endl;
                      }
                   }

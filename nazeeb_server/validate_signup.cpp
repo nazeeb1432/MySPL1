@@ -2,7 +2,7 @@
 using namespace std;
 #include<regex>
 #include "SHA-Algo/sha.h"
-
+#include<conio.h>
 
 
 
@@ -34,14 +34,34 @@ bool checkID_and_signup(string str){
 
     output2.open("uniqueMailID.txt");
 
+    char ch;
+
     for(auto &x:viki){
         if(x.first==str){
             if(x.second==1){//means id available
                 string firstname,password,hashedPassword;
-                cout<<"\nEnter firstname:";
+                cout<<"Enter firstname:";
                 cin>>firstname;
-                cout<<"\nEnter password:";
-                cin>>password;
+                cout<<"Enter password:";
+                //making changes
+                // cin>>password;
+                ch=getch();//discards \n of username
+                ch=getch();//for first character of password
+                while(ch!='\n'){
+                    if(ch==127){//127 is backspace
+                        if(password.size()!=0){
+                            password.pop_back();
+                        }
+                    }
+                    else{
+                        password.push_back(ch);
+                        cout<<'*';
+                    }
+                    // cout<<password<<endl;
+                    ch=getch();
+                }
+                //change finished
+
                 hashedPassword=Hash(password);
                 vec.push_back({{str,firstname},hashedPassword});
                 //NOW APPEND THE RECORD TO ACCOUNTS.TXT

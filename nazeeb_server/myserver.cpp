@@ -1,5 +1,6 @@
 /* myserver.cpp 
 
+IMAP
 Protocol structure for SEND, LIST, READ, DEL, QUIT -> implemented as specified
 Missing:  LDAP integration, Huffman"
 
@@ -125,6 +126,7 @@ void serverThread(MyHelper helper, MySocket &serverSocket, int new_socket, strin
 
             // get every mail subject from directory and send to client
             mails = helper.subjectsInDirectory(dirPath);
+            sort(mails.begin(), mails.end());//added sort
             buffer = to_string(mails.size()) + " mails for user " + user;
             serverSocket.sendMessage(buffer.c_str(), new_socket);
 
