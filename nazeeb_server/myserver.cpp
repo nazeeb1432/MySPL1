@@ -102,7 +102,7 @@ void serverThread(MyHelper helper, MySocket &serverSocket, int new_socket, strin
             file.open(filename.c_str(), ios::out);
             file << sender + receiver + subject + message + ".\n\0";
             cout << "Mail " << subject.substr(0, subject.length() - 1) << " from user "
-                 << sender.substr(0, sender.length() - 1) << " saved to " << filename << endl;
+                 << sender.substr(0, sender.length() - 1) << " sent to " << filename << endl;
             serverSocket.sendMessage("SENT!!\0", new_socket);
             file.close();
             mtx.unlock();
@@ -165,7 +165,7 @@ void serverThread(MyHelper helper, MySocket &serverSocket, int new_socket, strin
             // check if user exists
             if (access(dirPath.c_str(), F_OK) == -1)
             {
-               serverSocket.sendMessage("ERR - user INBOX does not exist\0", new_socket);
+               serverSocket.sendMessage("ERR - user INBOX is empty\0", new_socket);
             }
             else
             {

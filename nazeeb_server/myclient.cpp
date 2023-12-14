@@ -272,6 +272,7 @@ int main(int argc, char *argv[])
                   L:
                   // user
                   cout<<"Enter username to see message list:";
+                  // buffer[0]='\0';
                   fgets(buffer, BUF, stdin);
                   buffer[strlen(buffer)] = '\0';
                   string userid=buffer;

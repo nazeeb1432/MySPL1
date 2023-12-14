@@ -3,8 +3,8 @@ bsse1402@nazeeb.com 0
 bsse1403@nazeeb.com 1
 bsse1404@nazeeb.com 1
 bsse1405@nazeeb.com 0
-bsse1406@nazeeb.com 1
-bsse1407@nazeeb.com 1
+bsse1406@nazeeb.com 0
+bsse1407@nazeeb.com 0
 bsse1408@nazeeb.com 1
 bsse1409@nazeeb.com 1
 bsse1410@nazeeb.com 1
@@ -20,7 +20,7 @@ bsse1419@nazeeb.com 1
 bsse1420@nazeeb.com 1
 bsse1421@nazeeb.com 1
 bsse1422@nazeeb.com 1
-bsse1423@nazeeb.com 1
+bsse1423@nazeeb.com 0
 bsse1424@nazeeb.com 1
 bsse1425@nazeeb.com 1
 bsse1426@nazeeb.com 0

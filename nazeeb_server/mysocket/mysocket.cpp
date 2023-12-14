@@ -59,7 +59,7 @@ int MySocket::acceptNewConnection()
         socketError("accept error");
     }
     cout << "Client connected from " << inet_ntoa(cliaddress.sin_addr) << ":" << ntohs(cliaddress.sin_port) << endl;
-    strcpy(buffer, "Welcome to myserver, Please enter your command:\0");
+    strcpy(buffer, "Welcome to nazeeb's server, Please enter your command:\0");
     if (send(new_socket, buffer, strlen(buffer), 0) == -1)
     {
         socketError("send error");
