@@ -5,8 +5,6 @@ using namespace std;
 #include<conio.h>
 
 
-
-
 bool checkID_and_signup(string str){
 
     vector<pair<string,bool>> viki;

@@ -245,7 +245,7 @@ int main(int argc, char *argv[])
 
                   //subject
                   cout<<"subject:";
-                  fgets(buffer, BUF, stdin);
+                  fgets(buffer, BUF, stdin);//send\n\0
                   buffer[strlen(buffer)] = '\0';
                   clientSocket.sendMessage(buffer);
 

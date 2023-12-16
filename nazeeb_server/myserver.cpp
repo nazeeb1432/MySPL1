@@ -2,7 +2,7 @@
 
 IMAP
 Protocol structure for SEND, LIST, READ, DEL, QUIT -> implemented as specified
-Missing:  LDAP integration, Huffman"
+Missing:  LDAP integration, Huffman,handling another pc of network"
 
 */
 
@@ -82,7 +82,7 @@ void serverThread(MyHelper helper, MySocket &serverSocket, int new_socket, strin
 
             // check if filename exists -> increment index till filename is unique
             // it can happend that the filename with the same index and subjects exists when a file before gets deleted
-            // solution would be the use of a UUID, however this is not implemented in standard c+++
+            // solution would be the use of a UUID, however this is not implemented in standard c++
             // so this rather "ugly" solution is used
             while (1)
             {
