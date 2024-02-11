@@ -1,10 +1,4 @@
-/* myserver.cpp 
 
-IMAP
-Protocol structure for SEND, LIST, READ, DEL, QUIT -> implemented as specified
-Missing:  LDAP integration, Huffman,handling another pc of network"
-
-*/
 
 #include <sys/types.h>
 #include <sys/socket.h>
